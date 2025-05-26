@@ -138,12 +138,15 @@
                 border-radius: 5px 0 0 5px;
                 outline: none;
             }
+            .text {
+                color: rgba(192, 30, 30, 0.589);
+            }
         </style>
     </head>
     
     <body>
         <div class="page">
-            <h1 style="font-family: 'Oswald', sans-serif;">Сборки на carry героев</h1>
+            <h1 class="text" style="font-family: 'Oswald', sans-serif;">Сборки на carry героев</h1>
             <div class="input">
                 <input type="text" class="search-input" placeholder="Введите запрос">
                 <button class="search-button">Поиск</button>
@@ -155,18 +158,18 @@
                 </div>
               </a>
               <form id="feedbackForm" novalidate>
-                <h2>Форма обратной связи</h2>
+                <h2 class="text">Форма обратной связи</h2>
             
-                <label for="name">Имя:</label><br>
+                <label class="text" for="name">Имя:</label><br>
                 <input type="text" class="name" id="name" name="name" placeholder="Ваше имя"><br><br>
             
-                <label for="email">Email:</label><br>
+                <label class="text" for="email">Email:</label><br>
                 <input type="text" class="name" id="email" name="email" placeholder="example@mail.com"><br><br>
             
-                <label for="comment">Комментарий:</label><br>
+                <label class="text" for="comment">Комментарий:</label><br>
                 <textarea id="comment" class="name" name="comment" rows="2" placeholder="Введите ваш комментарий"></textarea><br><br>
             
-                <button type="submit">Отправить</button>
+                <button class="search-button" type="submit">Отправить</button>
               </form>
             
               <p id="message"></p>
