@@ -161,13 +161,13 @@
                 <h2 class="text">Форма обратной связи</h2>
             
                 <label class="text" for="name">Имя:</label><br>
-                <input type="text" class="name" id="name" name="name" placeholder="Ваше имя"><br><br>
+                <input type="text" class="name" id="name" name="name" placeholder="Ваше имя" required><br><br>
             
                 <label class="text" for="email">Email:</label><br>
-                <input type="text" class="name" id="email" name="email" placeholder="example@mail.com"><br><br>
+                <input type="email" class="name" id="email" name="email" placeholder="example@mail.com" required><br><br>
             
                 <label class="text" for="comment">Комментарий:</label><br>
-                <textarea id="comment" class="name" name="comment" rows="2" placeholder="Введите ваш комментарий"></textarea><br><br>
+                <textarea id="comment" class="name" name="comment" rows="2" placeholder="Введите ваш комментарий" required></textarea><br><br>
             
                 <button class="search-button" type="submit">Отправить</button>
               </form>
@@ -183,7 +183,7 @@
                   return re.test(email);
                 }
             
-                form.addEventListener('submit', function(event) {
+                form.addEventListener('submit', async function(event) {
                   event.preventDefault();
             
                   const name = form.name.value.trim();
@@ -205,10 +205,34 @@
                     return;
                   }
             
-                  messageElem.className = 'success';
-                  messageElem.textContent = `Спасибо, ${name}! Ваш комментарий принят. Мы свяжемся с вами по адресу ${email}.`;
-                  
-                  form.reset();
+                  try {
+                    const response = await fetch('http://158.160.145.245:8081/api/feedback', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        comment: comment
+                      })
+                    });
+            
+                    if (response.ok) {
+                      const data = await response.text();
+                      messageElem.className = 'success';
+                      messageElem.textContent = `Спасибо, ${name}! Ваш комментарий принят.`;
+                      form.reset();
+                    } else {
+                      const errorData = await response.text();
+                      messageElem.className = 'error';
+                      messageElem.textContent = errorData || 'Ошибка при отправке формы';
+                    }
+                  } catch (error) {
+                    messageElem.className = 'error';
+                    messageElem.textContent = 'Ошибка соединения с сервером';
+                    console.error('Ошибка:', error);
+                  }
                 });
               </script>
         </div>
